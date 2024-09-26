@@ -36,3 +36,15 @@ git push --set-upstream origin IIMR
 Username : IIMR
 mail : cchantigadu75@gmail.com
 Password : SIH_project_p@ssword
+
+
+
+
+
+
+DGP – Director General of Police               ---  nanda
+ADGP – Additional Director General of Police    --- manasa
+IGP – Inspector General of Police             --- Charanya
+DIG – Deputy Inspector General of Police      --- Ashish
+SP – Superintendent of Police        --- sowmya
+ASP  – Sub-Inspector of Police         --- Ashok

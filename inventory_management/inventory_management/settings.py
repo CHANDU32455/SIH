@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'frontend',
+    "inventory_management",
     'rest_framework',
     'corsheaders',
 ]
@@ -64,6 +65,7 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
+
 
 ROOT_URLCONF = 'inventory_management.urls'
 
