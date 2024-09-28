@@ -38,8 +38,10 @@ git push --set-upstream origin IIMR
  git log HEAD..origin/IMR --oneline              -- tells you the changes taken from git
  git pull origin IMR                            -- pulls changes
 
-
-
+----------------  update local changes 
+git add filename
+git commit -m "Updated rough.txt with latest changes"
+git push
 
 Username : IIMR
 mail : cchantigadu75@gmail.com
