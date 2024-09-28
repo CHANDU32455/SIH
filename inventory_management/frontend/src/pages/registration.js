@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import '../styles/registration.css';
+
 function Registration() {
   const [userData, setUserData] = useState({
     user_id: '',
@@ -53,9 +55,9 @@ function Registration() {
   };
 
   return (
-    <div>
+    <div className="registration-container">
       <h2>User Registration</h2>
-      <form onSubmit={handleSubmit}>
+      <form className='form-class' onSubmit={handleSubmit}>
         <label htmlFor="user_id">User ID</label>
         <input type="text" id="user_id" name="user_id" value={userData.user_id} onChange={handleChange} required />
         
