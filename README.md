@@ -40,7 +40,7 @@ git push --set-upstream origin IIMR
 
 ----------------  update local changes 
 git add filename
-git commit -m "Updated rough.txt with latest changes"
+git commit -m "message during commit"
 git push
 
 Username : IIMR
