@@ -31,6 +31,14 @@ git push
 // once added "  git push  " is enough
 git push --set-upstream origin IIMR  
 
+-------------   get changes from git before pushing
+ git checkout IMR                               --goes to IMR to check for changes
+ git fetch origin                               --fetches changes from git
+ git status                                      -- tells status
+ git log HEAD..origin/IMR --oneline              -- tells you the changes taken from git
+ git pull origin IMR                            -- pulls changes
+
+
 
 
 Username : IIMR

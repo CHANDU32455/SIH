@@ -16,3 +16,11 @@ class UserRegistration(models.Model):
 
     def __str__(self):
         return self.name
+
+class Stations(models.Model):
+    station_id = models.CharField(max_length=50, unique=True, primary_key=True)
+    station_name = models.CharField(max_length=50)
+    station_location = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.station_name

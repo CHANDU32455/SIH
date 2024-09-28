@@ -1,15 +1,13 @@
 # inventory_management/views.py
 from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics,status
 from rest_framework.response import Response
-from rest_framework import status
-from .models import UserRegistration
-from .serializers import UserRegistrationSerializer
 from rest_framework.exceptions import ValidationError
-from .serializers import UserLoginSerializer
 from django.contrib.auth.hashers import check_password
 from django.db.models import Q
-
+from .models import UserRegistration
+from .serializers import UserRegistrationSerializer,UserLoginSerializer,StationsSerializer
+from .models import Stations
 
 def index(request):
     return render(request, 'frontend/build/index.html')
@@ -59,3 +57,29 @@ class UserLoginView(generics.GenericAPIView):
                 return Response({"detail": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class StationListCreateView(generics.ListCreateAPIView):
+    queryset = Stations.objects.all()
+    serializer_class = StationsSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        try:
+            # Validate the data, raise validation errors if the data is invalid
+            serializer.is_valid(raise_exception=True)
+        except ValidationError as e:
+            return Response({"errors": e.detail}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Save the new station if validation passes
+        self.perform_create(serializer)
+        
+        # Return the created station's data as a success response
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def list(self, request, *args, **kwargs):
+        # Fetch all stations
+        queryset = self.get_queryset()
+        # Serialize the station data
+        serializer = self.get_serializer(queryset, many=True)
+        # Return the serialized data in the response
+        return Response(serializer.data, status=status.HTTP_200_OK)

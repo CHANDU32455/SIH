@@ -17,13 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
-from .views import UserRegistrationView
-from .views import UserLoginView
+from .views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='index.html')),
     path('api/register/', UserRegistrationView.as_view(), name='user-registration'),
     path('api/login/', UserLoginView.as_view(), name='user-login'),
-
+    path('api/stations/', StationListCreateView.as_view(), name='stations-list-create'),
 ]
-
