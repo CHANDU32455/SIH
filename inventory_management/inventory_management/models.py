@@ -24,3 +24,13 @@ class Stations(models.Model):
 
     def __str__(self):
         return self.station_name
+
+#class Assest(models.Model):     (class name should be singular)
+    #pass
+    # logic to create assests. inclides assest_id being PK, name,location it is in,last location,status,
+    # assest_type, expiry_date ,..
+
+#class RoughModel(models.Model):
+    #itemid = models.CharField(max_length=50, unique=True, primary_key=True)
+    #itemname = models.CharField(max_length=50)
+    #itemloc = models.CharField(max_length=200)

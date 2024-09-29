@@ -5,3 +5,5 @@ from .models import UserRegistration, Stations
 admin.site.register(UserRegistration)
 
 admin.site.register(Stations)
+
+#admin.site.register(Assests)
