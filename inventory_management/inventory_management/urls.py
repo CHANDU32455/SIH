@@ -24,4 +24,5 @@ urlpatterns = [
     path('api/register/', UserRegistrationView.as_view(), name='user-registration'),
     path('api/login/', UserLoginView.as_view(), name='user-login'),
     path('api/stations/', StationListCreateView.as_view(), name='stations-list-create'),
+    path('api/assets/', create_asset, name='asset-list-create'),
 ]

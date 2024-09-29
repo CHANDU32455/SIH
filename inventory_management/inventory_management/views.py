@@ -3,10 +3,12 @@ from django.shortcuts import render
 from rest_framework import generics,status
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
+from rest_framework.decorators import api_view
 from django.contrib.auth.hashers import check_password
 from django.db.models import Q
 from .models import UserRegistration
 from .serializers import UserRegistrationSerializer,UserLoginSerializer,StationsSerializer
+from .serializers import AssetSerializer
 from .models import Stations
 
 def index(request):
@@ -77,9 +79,16 @@ class StationListCreateView(generics.ListCreateAPIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def list(self, request, *args, **kwargs):
-        # Fetch all stations
         queryset = self.get_queryset()
-        # Serialize the station data
         serializer = self.get_serializer(queryset, many=True)
-        # Return the serialized data in the response
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+@api_view(['POST'])
+def create_asset(request):
+    serializer = AssetSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=400)

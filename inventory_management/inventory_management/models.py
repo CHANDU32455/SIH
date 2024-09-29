@@ -25,23 +25,30 @@ class Stations(models.Model):
     def __str__(self):
         return self.station_name
 
-class Asset(models.Model):  # Class name should be singular
+class Asset(models.Model):
+    ASSET_TYPE_CHOICES = [
+        ('VEHICLE', 'Vehicle'),
+        ('WEAPON', 'Weapon'),
+        ('ELECTRONIC', 'Electronic Device'),
+        ('PROTECTIVE_GEAR', 'Protective Gear'),
+        ('OFFICE_EQUIPMENT', 'Office Equipment'),
+        ('MISC', 'Miscellaneous Equipment'),
+    ]
+
+    STATUS_CHOICES = [
+        ('ACTIVE', 'Active'),
+        ('INACTIVE', 'Inactive'),
+        ('MOVING', 'Moving'),
+        ('MOVED', 'Moved'),
+    ]
+    
     asset_id = models.CharField(max_length=50, unique=True, primary_key=True)
-    asset_name = models.CharField(max_length=100)
-    asset_location = models.CharField(max_length=100,  default='inventory')
-    asset_last_location = models.CharField(max_length=100, default='inventory')
-    asset_status = models.CharField(max_length=50)  
-    asset_type = models.CharField(max_length=50)
-    asset_expiry_date = models.DateField()
+    name = models.CharField(max_length=100)
+    location = models.CharField(max_length=100, default='inventory')
+    last_location = models.CharField(max_length=100, default='inventory')
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='INACTIVE')
+    asset_type = models.CharField(max_length=50, choices=ASSET_TYPE_CHOICES)
+    expiry_date = models.DateField()
 
-    def __str__(self):
+    def __str__(self): 
         return self.name
-#class Assest(models.Model):     (class name should be singular)
-    #pass
-    # logic to create assests. inclides assest_id being PK, name,location it is in,last location,status,
-    # assest_type, expiry_date ,..
-
-#class RoughModel(models.Model):
-    #itemid = models.CharField(max_length=50, unique=True, primary_key=True)
-    #itemname = models.CharField(max_length=50)
-    #itemloc = models.CharField(max_length=200)

@@ -1,0 +1,96 @@
+/* Dashboard container styling */
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+    justify-content: flex-start; /* Align content to the top */
+    padding: 20px;
+    box-sizing: border-box; /* Include padding in height */
+    background-color: #f9f9f9; /* Light background color */
+    min-height: 100vh; /* Ensure it takes full viewport height */
+}
+
+/* Main heading styling */
+.dashboard h1 {
+    margin: 0; /* Remove default margin */
+    font-size: 2rem; /* Adjust font size */
+    padding-bottom: 10px; /* Space below the main heading */
+    color: #333; /* Darker color for contrast */
+}
+
+/* User info styling */
+.user-info {
+    padding-bottom: 20px; /* Space below the user info */
+    text-align: center; /* Center the text */
+}
+
+/* Image container styling */
+.image-container {
+    display: flex;
+    justify-content: space-between; /* Space images horizontally */
+    width: 100%; /* Full width */
+    max-width: 800px; /* Limit maximum width for better appearance */
+    padding-bottom: 20px; /* Space below images */
+}
+
+/* Dashboard image styles */
+.dashboard-image {
+    width: 100%; /* Make images responsive to container */
+    height: auto; /* Maintain aspect ratio */
+    max-width: 350px; /* Maximum width for each image */
+    border-radius: 8px; /* Slight rounding for images */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    transition: transform 0.3s; /* Smooth scaling on hover */
+}
+
+.dashboard-image:hover {
+    transform: scale(1.05); /* Scale image on hover */
+}
+
+/* Scrolling box styling */
+.scrolling-box {
+    width: 100%; /* Full width */
+    max-width: 800px; /* Limit maximum width for better appearance */
+    height: auto; /* Allow rows to expand without restriction */
+    overflow-y: auto; /* Enable vertical scrolling if needed */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    border: 1px solid #ccc; /* Border around the scrolling box */
+    border-radius: 8px; /* Rounded corners for the box */
+    background-color: #fff; /* White background for better visibility */
+}
+
+/* Horizontal rows styling */
+.horizontal-rows {
+    display: flex;
+    flex-direction: column; /* Stack rows vertically */
+    gap: 20px; /* Space between rows */
+    padding: 10px; /* Padding inside the container */
+}
+
+/* Row styling */
+.row {
+    min-height: 50px; /* Minimum height for each row */
+    padding: 10px; /* Padding inside each row */
+    background-color: #ffffff; /* White background for rows */
+    border-radius: 5px; /* Slight rounding for rows */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    text-align: center; /* Center text in rows */
+    display: flex; /* Flexbox for centering */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+/* Row hover effect */
+.row:hover {
+    background-color: #e9ecef; /* Light grey background on hover */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+/* Loading and error message styles */
+.loading, .error {
+    text-align: center; /* Center the text */
+    color: #dc3545; /* Red color for error */
+    font-weight: bold; /* Bold text */
+    margin: 10px 0; /* Margin for spacing */
+}

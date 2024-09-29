@@ -7,6 +7,7 @@ export default function NavBar() {
                 <li><Link to="/">Home</Link></li>
                 <li><Link to="/dashboard">Dashboard</Link></li>
                 <li><Link to="/add_stations">Add Stations</Link></li>
+                <li><Link to="/add_assests">Add Assets</Link></li>
             </ul>
         </nav>
     );
