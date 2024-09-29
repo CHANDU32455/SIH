@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+<<<<<<< HEAD
 import '../styles/registration.css';
+=======
+>>>>>>> 90691e26cdb1344455c16e5b396a24909eba5f4b
 
 function Registration() {
   const [userData, setUserData] = useState({
