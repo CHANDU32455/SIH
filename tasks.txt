@@ -1,0 +1,3 @@
+charanya : go to add stations page in react/Django and add 20 stations with appropriate data.
+manasa: create a database model in models.py file named assests to handle each assest.
+sowmya : once assests table created add 20 assests professionally into table in admin page.
