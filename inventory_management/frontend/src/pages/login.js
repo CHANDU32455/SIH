@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import { login } from '../auth';
 function Login() {
   const [credentials, setCredentials] = useState({
     identifier: '', 
@@ -26,17 +26,15 @@ function Login() {
     e.preventDefault();
     setLoading(true);
     try {
-      console.log(credentials);
       const response = await axios.post('http://localhost:8000/api/login/', {
         identifier: credentials.identifier,
         password: credentials.password,
       });
       
       setMessage('Login successful: ' + JSON.stringify(response.data));
-      console.log(response.data);
+      login(response.data.user);  // Store user data in session storage
 
-      // Pass user data to the dashboard using navigate with state
-      navigate('/dashboard', { state: { user: response.data.user } });
+      navigate('/dashboard', { state: { user: response.data.user } });  // Redirect to dashboard
       
     } catch (error) {
       setMessage('Error during login: ' + (error.response?.data?.detail || error.message));

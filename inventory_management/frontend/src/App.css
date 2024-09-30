@@ -1,3 +1,10 @@
+body {
+  margin: 0;
+  padding-top: 80px; /* Match this to your navbar's height */
+  box-sizing: border-box;
+}
+
+
 .App {
   text-align: center;
 }

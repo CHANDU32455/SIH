@@ -39,9 +39,9 @@ git push --set-upstream origin IIMR
  git pull origin IMR                            -- pulls changes
 
 ----------------  update local changes 
-git add filename
-git commit -m "message during commit"
-git push
+git add .
+git commit -m "navbar styled"
+git push origin IMR
 
 Username : IIMR
 mail : cchantigadu75@gmail.com
