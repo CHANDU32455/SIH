@@ -21,8 +21,8 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Registration />} />
           {/* Protecting the following routes */}
+          <Route path="/register" element={<ProtectedRoute element={<Registration />} />} />
           <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
           <Route path="/add_stations" element={<ProtectedRoute element={<AddStations />} />} />
           <Route path="/add_assests" element={<ProtectedRoute element={<AssetForm />} />} />

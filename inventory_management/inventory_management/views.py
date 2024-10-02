@@ -51,6 +51,7 @@ class UserLoginView(generics.GenericAPIView):
                     "message": "Login successful!",
                     "user": {
                         "name": user.name,
+                        "user_id": user.user_id,
                         "location": user.location,
                         "position": user.position
                     }
@@ -83,7 +84,9 @@ class StationListCreateView(generics.ListCreateAPIView):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-
+class StationMastersListView(generics.ListAPIView):
+    queryset = UserRegistration.objects.all()
+    serializer_class = UserRegistrationSerializer
 
 @api_view(['POST'])
 def create_asset(request):

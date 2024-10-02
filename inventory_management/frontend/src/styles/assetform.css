@@ -1,0 +1,60 @@
+/* Asset Form Container */
+.asset-form {
+    max-width: 600px;  /* Adjust to fit your design */
+    margin: 2rem auto; /* Center the form */
+    padding: 2rem;
+    border: 1px solid #ccc; /* Border for the form */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #fff; /* White background */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Form Group */
+.asset-form .form-group {
+    margin-bottom: 1.5rem; /* Spacing between form groups */
+}
+
+/* Labels */
+.asset-form label {
+    display: block; /* Block display for better spacing */
+    margin-bottom: 0.5rem; /* Space between label and input */
+    font-weight: bold; /* Make labels bold */
+    text-align: left; /* Align labels to the left */
+}
+
+/* Input and Select Fields */
+.asset-form input[type="text"],
+.asset-form input[type="date"],
+.asset-form input[type="number"],
+.asset-form select {
+    width: 100%; /* Full width */
+    padding: 0.5rem; /* Padding inside inputs */
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 1rem; /* Font size */
+    transition: border-color 0.3s; /* Smooth transition on focus */
+}
+
+.asset-form input[type="text"]:focus,
+.asset-form input[type="date"]:focus,
+.asset-form input[type="number"]:focus,
+.asset-form select:focus {
+    border-color: #007bff; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+}
+
+/* Submit Button */
+.asset-form .submit-btn {
+    background-color: #007bff; /* Primary color */
+    color: white; /* White text */
+    padding: 0.7rem 1.5rem; /* Padding for button */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 1rem; /* Font size */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.asset-form .submit-btn:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}

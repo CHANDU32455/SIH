@@ -1,0 +1,93 @@
+/* Main container for the AddStations component */
+.add-stations {
+    max-width: 600px; /* Set a max width for the form */
+    margin: 20px auto; /* Center the component */
+    padding: 20px;
+    background-color: #ffffff; /* White background for contrast */
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Softer shadow for depth */
+  }
+  
+  /* Headings */
+  .add-stations h2 {
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center; /* Center the heading */
+  }
+  
+  /* Form elements */
+  .add-stations form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .add-stations label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #444;
+    font-size: 1rem; /* Slightly larger font for labels */
+  }
+  
+  .add-stations input,
+  .add-stations .react-select {
+    padding: 12px; /* Increased padding for comfort */
+    border: 1px solid #ddd; /* Softer border color */
+    border-radius: 6px; /* More rounded corners */
+    margin-bottom: 20px; /* Increased space between inputs */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Added transition for shadow effect */
+  }
+  
+  /* Input focus state */
+  .add-stations input:focus,
+  .add-stations .react-select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Glow effect on focus */
+    outline: none;
+  }
+  
+  /* Button styles */
+  .add-stations button {
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem; /* Adjusted font size */
+    transition: background-color 0.3s, transform 0.2s; /* Added transform for button */
+  }
+  
+  .add-stations button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Lift effect on hover */
+  }
+  
+  /* Message display */
+  .add-stations p {
+    margin-top: 15px;
+    color: #d9534f; /* Bootstrap danger color for errors */
+    text-align: center; /* Center error messages */
+  }
+  
+  /* Available stations list */
+  .add-stations ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .add-stations li {
+    background-color: #f1f1f1; /* Softer background color for list items */
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 12px; /* Reduced margin for list items */
+    transition: background-color 0.3s; /* Transition for hover effect */
+  }
+  
+  .add-stations li:hover {
+    background-color: #e2e6ea; /* Slightly darker on hover */
+  }
+  
+  .add-stations li strong {
+    color: #333;
+  }
+  

@@ -3,8 +3,8 @@ export const isAuthenticated = () => {
   };
   
   export const login = (userData) => {
-    sessionStorage.setItem('username', userData.username);
-    // If using tokens, store token in session storage
+    sessionStorage.setItem('username', userData.name);
+    sessionStorage.setItem('position', userData.position);
   };
   
   export const logout = () => {

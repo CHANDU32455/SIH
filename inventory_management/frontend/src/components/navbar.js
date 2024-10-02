@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Logout from './logout';
 
 const Nav = styled.nav`
     background-color: #2c3e50;
@@ -68,8 +67,8 @@ export default function NavBar() {
     return (
         <Nav isVisible={isVisible}>
             <Ul>
-                <Li><StyledLink to="/">Home</StyledLink></Li>
                 <Li><StyledLink to="/dashboard">Dashboard</StyledLink></Li>
+                <Li><StyledLink to="/register">Add Station Masters</StyledLink></Li>
                 <Li><StyledLink to="/add_stations">Add Stations</StyledLink></Li>
                 <Li><StyledLink to="/add_assests">Add Assets</StyledLink></Li>
                 <Li><StyledLink to="/logout">logout</StyledLink></Li>

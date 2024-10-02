@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect,useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { login } from '../auth';
+import { isAuthenticated } from '../auth';
+
 function Login() {
   const [credentials, setCredentials] = useState({
     identifier: '', 
@@ -22,6 +24,13 @@ function Login() {
     setCredentials({ ...credentials, identifier: '' });
   };
 
+  // Correctly use useEffect to check authentication status
+  useEffect(() => {
+    if (isAuthenticated()) {
+      navigate('/dashboard'); // Redirect to dashboard if already authenticated
+    }
+  }, [navigate]); // Dependency array to run the effect only once when the component mounts
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -30,19 +39,19 @@ function Login() {
         identifier: credentials.identifier,
         password: credentials.password,
       });
-      
+  
       setMessage('Login successful: ' + JSON.stringify(response.data));
-      login(response.data.user);  // Store user data in session storage
-
-      navigate('/dashboard', { state: { user: response.data.user } });  // Redirect to dashboard
       
+      login(response.data.user);
+      
+      navigate('/dashboard', { state: { user: response.data.user } });
     } catch (error) {
       setMessage('Error during login: ' + (error.response?.data?.detail || error.message));
     } finally {
       setLoading(false);
     }
   };
-
+  
   return (
     <div>
       <h2>User Login</h2>
@@ -89,7 +98,6 @@ function Login() {
         />
         <button type="submit" disabled={loading}>Login</button>
       </form>
-      <Link to="/register">Register</Link>
       {message && <p>{message}</p>}
     </div>
   );

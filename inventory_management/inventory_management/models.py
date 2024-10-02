@@ -1,6 +1,7 @@
-# inventory_management/models.py
 from django.db import models
 from django.contrib.auth.hashers import make_password
+from django.utils import timezone
+from django.core.exceptions import ValidationError
 
 class UserRegistration(models.Model):
     user_id = models.CharField(max_length=50, unique=True)
@@ -10,8 +11,9 @@ class UserRegistration(models.Model):
     password = models.CharField(max_length=128)
 
     def save(self, *args, **kwargs):
-        # Hash the password before saving
-        self.password = make_password(self.password)
+        # Only hash the password if it is being set or modified
+        if not self.pk or 'password' in self.get_dirty_fields():
+            self.password = make_password(self.password)
         super(UserRegistration, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -19,6 +21,7 @@ class UserRegistration(models.Model):
 
 class Stations(models.Model):
     station_id = models.CharField(max_length=50, unique=True, primary_key=True)
+    station_master_id = models.ForeignKey(UserRegistration, on_delete=models.CASCADE, null=True)
     station_name = models.CharField(max_length=50)
     station_location = models.CharField(max_length=200)
 
@@ -43,12 +46,19 @@ class Asset(models.Model):
     ]
     
     asset_id = models.CharField(max_length=50, unique=True, primary_key=True)
-    name = models.CharField(max_length=100)
+    station_id = models.ForeignKey(Stations, on_delete=models.CASCADE, null=True, blank=True)
+    name = models.CharField(max_length=100, db_index=True)
     location = models.CharField(max_length=100, default='inventory')
     last_location = models.CharField(max_length=100, default='inventory')
-    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='INACTIVE')
-    asset_type = models.CharField(max_length=50, choices=ASSET_TYPE_CHOICES)
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='INACTIVE', db_index=True)
+    asset_type = models.CharField(max_length=50, choices=ASSET_TYPE_CHOICES, db_index=True)
+    manufactured_date = models.DateField(default=timezone.now)
     expiry_date = models.DateField()
 
-    def __str__(self): 
+    def clean(self):
+        # Ensure that the expiry_date is later than manufactured_date
+        if self.expiry_date <= self.manufactured_date:
+            raise ValidationError("Expiry date must be after the manufactured date.")
+
+    def __str__(self):
         return self.name

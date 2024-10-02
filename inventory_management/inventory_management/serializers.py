@@ -1,7 +1,8 @@
-from rest_framework import serializers
+from rest_framework import serializers,generics
 from .models import Asset, Stations,UserRegistration
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
     class Meta:
         model = UserRegistration
         fields = ['user_id', 'name', 'position', 'location', 'password']
@@ -13,9 +14,9 @@ class UserLoginSerializer(serializers.Serializer):
 class StationsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stations
-        fields = ['station_id', 'station_name', 'station_location']
+        fields = ['station_id','station_master_id', 'station_name', 'station_location']
 
 class AssetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Asset
-        fields = ['asset_id', 'name', 'location', 'last_location', 'status', 'asset_type', 'expiry_date']
+        fields = ['asset_id','station_id', 'name', 'location', 'last_location', 'status', 'asset_type', 'expiry_date']

@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import axios from 'axios'; // Import axios for making API calls
 import '../styles/dashboard.css';
 import ca from '../assets/costanalysis.jpeg'; 
 import tm from '../assets/timemenagent.png';
 
 export default function Dashboard() {
-  const location = useLocation();
-  const { user } = location.state || {};  // Get the user data from the state
   const [stations, setStations] = useState([]); // State to store station details
   const [loading, setLoading] = useState(true); // State to manage loading status
   const [error, setError] = useState(null); // State to manage error status
+
+  // Fetch username and position from session storage
+  const username = sessionStorage.getItem('username');
+  const position = sessionStorage.getItem('position');
 
   useEffect(() => {
     const fetchStations = async () => {
@@ -30,11 +31,10 @@ export default function Dashboard() {
   return (
     <div className="dashboard">
       <h1>Dashboard Page</h1>
-      {user ? (
+      {username ? (
         <div className="user-info">
-          <h2>Welcome, {user.name}</h2>
-          <p>Location: {user.location}</p>
-          <p>Position: {user.position}</p>
+          <h2>Welcome, {username}</h2>
+          <p>Position: {position}</p>
         </div>
       ) : (
         <p>No user data available</p>
