@@ -2,13 +2,13 @@
 
 cd ../../
 ./env/scripts/activate
-cd SIH\Inventory_management\inventory_management
+cd SIH_project\Inventory_management\SIH\inventory_management
 python manage.py runserver
 
 
 cd ../../
 ./env/scripts/activate
-cd SIH\Inventory_management\inventory_management
+cd SIH_project\Inventory_management\SIH\inventory_management
 cd frontend
 npm start
 
