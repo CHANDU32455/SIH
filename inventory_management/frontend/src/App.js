@@ -9,6 +9,9 @@ import NavBar from './components/navbar';
 import AssetForm from './pages/add_assests';
 import Logout from './components/logout';
 import { isAuthenticated } from './auth';
+import Audits from './pages/audits';
+import Reporting from './pages/reporting';
+import DynamicResourceAllocation from './pages/dynamic_resource_allocation';
 import StationDetails from './pages/station_details';
 
 function ProtectedRoute({ element, ...rest }) {
@@ -28,6 +31,9 @@ function App() {
           <Route path="/add_stations" element={<ProtectedRoute element={<AddStations />} />} />
           <Route path="/add_assests" element={<ProtectedRoute element={<AssetForm />} />} />
           <Route path="/station_details" element={<ProtectedRoute element={<StationDetails />} />} />
+          <Route path="/audits" element={<ProtectedRoute element={<Audits />} />} />
+          <Route path="/reporting" element={<ProtectedRoute element={<Reporting />} />} />
+          <Route path="/dynamic_resource_allocation" element={<ProtectedRoute element={<DynamicResourceAllocation />} />} />
           <Route path="/logout" element={<Logout />} />
         </Routes>
       </div>

@@ -1,3 +1,3 @@
 export default function DynamicResourceAllocation() {
-    return <div>Dynamic Resource Allocation happens in this page</div>;
+    return <h1>Dynamic Resource Allocation happens in this page</h1>;
 }

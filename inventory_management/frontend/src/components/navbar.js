@@ -68,9 +68,9 @@ export default function NavBar() {
         <Nav isVisible={isVisible}>
             <Ul>
                 <Li><StyledLink to="/dashboard">Dashboard</StyledLink></Li>
-                <Li><StyledLink to="/register">Add Station Masters</StyledLink></Li>
-                <Li><StyledLink to="/add_stations">Add Stations</StyledLink></Li>
-                <Li><StyledLink to="/add_assests">Add Assets</StyledLink></Li>
+                <Li><StyledLink to="/audits">Audits</StyledLink></Li>
+                <Li><StyledLink to="/dynamic_resource_allocation">Dynamic Resource Allocation</StyledLink></Li>
+                <Li><StyledLink to="/reporting">Reporting</StyledLink></Li>   
                 <Li><StyledLink to="/logout">logout</StyledLink></Li>
             </Ul>
         </Nav>
