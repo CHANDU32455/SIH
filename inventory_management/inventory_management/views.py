@@ -6,10 +6,11 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.decorators import api_view
 from django.contrib.auth.hashers import check_password
 from django.db.models import Q
-from .models import UserRegistration
-from .serializers import UserRegistrationSerializer,UserLoginSerializer,StationsSerializer
-from .serializers import AssetSerializer
-from .models import Stations
+from .models import Asset, UserRegistration,Stations
+from .serializers import UserRegistrationSerializer,UserLoginSerializer,StationsSerializer,AssetSerializer
+from rest_framework.exceptions import NotFound
+from rest_framework.generics import ListAPIView
+
 
 def index(request):
     return render(request, 'frontend/build/index.html')
@@ -95,3 +96,14 @@ def create_asset(request):
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors, status=400)
+
+class AssetListByStationView(generics.ListAPIView):
+    serializer_class = AssetSerializer
+
+    def get_queryset(self):
+        station_name = self.kwargs['station_name']
+        try:
+            station = Stations.objects.get(station_name=station_name)
+            return Asset.objects.filter(station_id=station)
+        except Stations.DoesNotExist:
+            raise NotFound(detail="Station not found", code=404)

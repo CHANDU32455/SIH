@@ -9,15 +9,23 @@ class UserRegistration(models.Model):
     position = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
     password = models.CharField(max_length=128)
+    station = models.ForeignKey('Stations', on_delete=models.CASCADE, null=True, blank=True)
 
     def save(self, *args, **kwargs):
-        # Only hash the password if it is being set or modified
-        if not self.pk or 'password' in self.get_dirty_fields():
+        # Check if this is an existing instance and the password has changed
+        if self.pk:
+            orig = UserRegistration.objects.get(pk=self.pk)
+            if orig.password != self.password:
+                self.password = make_password(self.password)
+        else:
+            # Hash the password for new instances
             self.password = make_password(self.password)
+        
         super(UserRegistration, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
+
 
 class Stations(models.Model):
     station_id = models.CharField(max_length=50, unique=True, primary_key=True)

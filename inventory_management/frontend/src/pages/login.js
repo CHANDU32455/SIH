@@ -45,6 +45,7 @@ function Login() {
       login(response.data.user);
       
       navigate('/dashboard', { state: { user: response.data.user } });
+      console.log(response.data.user);
     } catch (error) {
       setMessage('Error during login: ' + (error.response?.data?.detail || error.message));
     } finally {

@@ -5,7 +5,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     class Meta:
         model = UserRegistration
-        fields = ['user_id', 'name', 'position', 'location', 'password']
+        fields = ['user_id', 'name', 'position', 'location', 'password', 'station']
 
 class UserLoginSerializer(serializers.Serializer):
     identifier = serializers.CharField(required=True)

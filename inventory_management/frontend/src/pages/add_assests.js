@@ -13,11 +13,12 @@ const AssetForm = () => {
     asset_type: '',
     manufactured_date: '',
     expiry_date: '',
-    station_id: null,  // For station_id field
+    station_id: null,
   });
 
   const [stationIds, setStationIds] = useState([]);
   const [stationLocations, setStationLocations] = useState([]);
+  const [isRestricted, setIsRestricted] = useState(false); // For restricting fields
 
   // Fetch stations on component mount
   useEffect(() => {
@@ -32,6 +33,9 @@ const AssetForm = () => {
           value: station.station_location,
           label: station.station_location,
         }));
+
+        // Adding 'inventory' to location and past location dropdowns
+        locationOptions.unshift({ value: 'inventory', label: 'Inventory' });
 
         setStationIds(stationIdOptions);
         setStationLocations(locationOptions);
@@ -55,6 +59,13 @@ const AssetForm = () => {
       ...formData,
       station_id: selectedOption.value,
     });
+
+    // Check if the selected station_id corresponds to a restricted station_master_id
+    if (selectedOption.value === '534') { // Example condition for restriction
+      setIsRestricted(true);
+    } else {
+      setIsRestricted(false);
+    }
   };
 
   // Handle location selection
@@ -85,6 +96,7 @@ const AssetForm = () => {
           expiry_date: '',
           station_id: null,
         });
+        setIsRestricted(false); // Reset restriction
       })
       .catch(error => {
         console.error("There was an error adding the asset!", error);
@@ -133,30 +145,33 @@ const AssetForm = () => {
         />
       </div>
 
-      {/* Location Dropdown */}
+      {/* Current Location Dropdown */}
       <div className="form-group">
-        <label htmlFor="location">Location</label>
+        <label htmlFor="location">Current Location</label>
         <Select
           id="location"
           name="location"
           options={stationLocations}
           onChange={(selectedOption) => handleLocationChange(selectedOption, 'location')}
-          placeholder="Select Location"
+          placeholder="Select Current Location"
           value={{ value: formData.location, label: formData.location }}
           required
+          isDisabled={isRestricted} // Disable if restricted
         />
       </div>
 
+      {/* Past Location Dropdown */}
       <div className="form-group">
-        <label htmlFor="last_location">Last Location</label>
+        <label htmlFor="last_location">Past Location</label>
         <Select
           id="last_location"
           name="last_location"
           options={stationLocations}
           onChange={(selectedOption) => handleLocationChange(selectedOption, 'last_location')}
-          placeholder="Select Last Location"
+          placeholder="Select Past Location"
           value={{ value: formData.last_location, label: formData.last_location }}
           required
+          isDisabled={isRestricted} // Disable if restricted
         />
       </div>
 
@@ -168,6 +183,7 @@ const AssetForm = () => {
           value={formData.status}
           onChange={handleChange}
           required
+          disabled={isRestricted} // Disable if restricted
         >
           <option value="ACTIVE">Active</option>
           <option value="INACTIVE">Inactive</option>
@@ -219,7 +235,7 @@ const AssetForm = () => {
         />
       </div>
 
-      <button type="submit" className="submit-btn">Submit</button>
+      <button type="submit" className="submit-btn" disabled={isRestricted}>Submit</button>
     </form>
   );
 };

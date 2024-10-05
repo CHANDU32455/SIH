@@ -1,0 +1,48 @@
+.station-details {
+    padding: 20px;
+    font-family: Arial, sans-serif; /* Scoped font */
+  }
+  
+  .sort-container {
+    display: flex;
+    justify-content: flex-end; /* Aligns the dropdown to the right */
+    background-color: #f0f0f0; /* Light background for the sort section */
+    padding: 10px; /* Padding around the sort section */
+    border-radius: 5px; /* Rounded corners */
+    margin-bottom: 20px; /* Space between the sort section and assets */
+  }
+  
+  .assets-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Space between cards */
+    gap: 20px; /* Gap between asset cards */
+  }
+  
+  .asset-card {
+    border: 1px solid #ccc; /* Light border for each card */
+    border-radius: 5px; /* Rounded corners */
+    padding: 15px;
+    background-color: #f9f9f9; /* Light background */
+    width: calc(33.33% - 20px); /* 3 cards per row with space for gap */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Light shadow */
+    box-sizing: border-box; /* Include padding in width calculation */
+  }
+  
+  .asset-card p {
+    margin: 5px 0; /* Space between text lines */
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .asset-card {
+      width: calc(50% - 20px); /* Two cards per row on smaller screens */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .asset-card {
+      width: 100%; /* Full width on very small screens */
+    }
+  }
+  
