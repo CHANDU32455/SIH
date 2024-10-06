@@ -45,11 +45,10 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard">
-      <h1>Dashboard Page</h1>
+      <h1>MadhyaPradesh Police</h1>
       {username ? (
         <div className="user-info">
           <h2>Welcome, {username}</h2>
-          <p>Position: {position}</p>
         </div>
       ) : (
         <p>No user data available</p>
@@ -60,6 +59,7 @@ export default function Dashboard() {
           <Link to="/add_stations" className="Dashboard-action-button">Add Stations</Link>
           <Link to="/add_assests" className="Dashboard-action-button">Add Assets</Link>
           <Link to="/register" className="Dashboard-action-button">Add Station Masters</Link>
+          <Link to="/userupdation" className="Dashboard-action-button">UpdateUser</Link>
         </div>
       )}
 

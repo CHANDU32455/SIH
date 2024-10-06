@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import '../styles/registration.css';
 
 function Registration() {
@@ -57,7 +56,8 @@ function Registration() {
   return (
     <div className="registration-container">
       <h2>User Registration</h2>
-      <form className='form-class' onSubmit={handleSubmit}>
+      {message && <p className="message">{message}</p>}
+      <form className='registration-form' onSubmit={handleSubmit}>
         <label htmlFor="user_id">User ID</label>
         <input type="text" id="user_id" name="user_id" value={userData.user_id} onChange={handleChange} required />
         
@@ -78,8 +78,6 @@ function Registration() {
         
         <button type="submit" disabled={loading}>Register</button>
       </form>
-      <Link to="/">login</Link>
-      {message && <p>{message}</p>}
     </div>
   );
 }

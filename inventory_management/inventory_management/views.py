@@ -14,7 +14,7 @@ from rest_framework.exceptions import NotFound
 def index(request):
     return render(request, 'frontend/build/index.html')
 
-class UserRegistrationView(generics.CreateAPIView):
+class UserRegistrationView(generics.GenericAPIView):
     queryset = UserRegistration.objects.all()
     serializer_class = UserRegistrationSerializer
 
@@ -24,10 +24,49 @@ class UserRegistrationView(generics.CreateAPIView):
             serializer.is_valid(raise_exception=True)
         except ValidationError as e:
             return Response({"errors": e.detail}, status=status.HTTP_400_BAD_REQUEST)
+        
         # If validation passes, save the new user registration
         self.perform_create(serializer)
+        
         # Return a success response with the created user's data
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def get(self, request, *args, **kwargs):
+        user_id = self.request.query_params.get('user_id', None)
+        if user_id is not None:
+            try:
+                user = UserRegistration.objects.get(user_id=user_id)
+                serializer = self.get_serializer(user)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            except UserRegistration.DoesNotExist:
+                return Response({"detail": "No user found for the given user ID."}, status=status.HTTP_404_NOT_FOUND)
+        
+        # If no user_id is provided, return an error message
+        return Response({"detail": "Please provide a user_id to fetch user data."}, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, *args, **kwargs):
+        user_id = self.request.query_params.get('user_id', None)
+        if user_id is None:
+            return Response({"detail": "Please provide a user_id to update."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = UserRegistration.objects.get(user_id=user_id)
+        except UserRegistration.DoesNotExist:
+            return Response({"detail": "No user found for the given user ID."}, status=status.HTTP_404_NOT_FOUND)
+
+        # Set partial=True to allow partial updates
+        serializer = self.get_serializer(user, data=request.data, partial=True)
+        try:
+            serializer.is_valid(raise_exception=True)
+        except ValidationError as e:
+            return Response({"errors": e.detail}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Save the updated user data
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def get_queryset(self):
+        return UserRegistration.objects.all()
 
 class UserLoginView(generics.GenericAPIView):
     serializer_class = UserLoginSerializer
@@ -118,8 +157,26 @@ class AssetListByStationView(generics.ListAPIView):
 
     def get_queryset(self):
         station_name = self.kwargs['station_name']
+        sort = self.request.query_params.get('sort', 'asset_type')  # Default sort by asset_type
+
         try:
+            # Find the station by station_name
             station = Stations.objects.get(station_name=station_name)
-            return Asset.objects.filter(station_id=station)
+            
+            # Build the queryset for assets based on the station
+            queryset = Asset.objects.filter(station_id=station)
+            
+            # Apply sorting based on the 'sort' parameter
+            if sort == 'asset_type':
+                queryset = queryset.order_by('asset_type')
+            elif sort == 'status':
+                queryset = queryset.order_by('status')
+            elif sort == 'ascending':
+                queryset = queryset.order_by('name')
+            elif sort == 'descending':
+                queryset = queryset.order_by('-name')
+            
+            return queryset
+        
         except Stations.DoesNotExist:
             raise NotFound(detail="Station not found", code=404)

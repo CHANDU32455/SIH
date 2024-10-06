@@ -1,93 +1,144 @@
 /* Main container for the AddStations component */
 .add-stations {
-    max-width: 600px; /* Set a max width for the form */
-    margin: 20px auto; /* Center the component */
-    padding: 20px;
-    background-color: #ffffff; /* White background for contrast */
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Softer shadow for depth */
+  max-width: 600px; /* Set a max width for the form */
+  margin: 40px auto; /* Center the component with more space at the top */
+  padding: 30px;
+  background-color: #f8f9fa; /* Light background for a modern look */
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Deeper shadow for more depth */
+}
+
+/* Headings */
+.add-stations h2 {
+  color: #333;
+  margin-bottom: 30px; /* More space below the heading */
+  text-align: center; /* Center the heading */
+  font-size: 1.8rem; /* Larger font size for emphasis */
+}
+
+/* Form section */
+.add-stations form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Form elements */
+.add-stations input,
+.add-stations .react-select {
+  padding: 15px; /* Increased padding for comfort */
+  border: 1px solid #ced4da; /* Softer border color */
+  border-radius: 8px; /* More rounded corners */
+  margin-bottom: 25px; /* Space between inputs */
+  transition: border-color 0.3s, box-shadow 0.3s; /* Added transition for shadow effect */
+  font-size: 1rem; /* Base font size */
+  width: 90%; /* Ensures both are the same width */
+  align-self: center; /* Center the inputs */
+  box-sizing: border-box; /* Include padding and border in width calculation */
+}
+
+/* Style for labels */
+.add-stations label {
+  margin-bottom: 8px; /* Space below the label */
+  font-weight: 600; /* Bold weight for labels */
+  color: #555; /* Slightly softer label color */
+  font-size: 1.1rem; /* Increased font size for labels */
+  display: block; /* Makes the label a block element */
+  text-align: left; /* Align text to the left */
+  margin-left: 30px; /* Remove any default margin */
+}
+
+/* Input focus state */
+.add-stations input:focus,
+.add-stations .react-select:focus {
+  border-color: #007bff; /* Highlight color on focus */
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.6); /* Glow effect on focus */
+  outline: none; /* Remove default outline */
+}
+
+/* Button styles */
+.add-stations button {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #007bff; /* Primary button color */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem; /* Slightly larger font size */
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+  width: 50%;
+  align-self: center; /* Center the button */
+}
+
+/* Button hover and active states */
+.add-stations button:hover {
+  background-color: #0056b3; /* Darker shade for hover */
+  transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+
+.add-stations button:active {
+  background-color: #004494; /* Even darker shade when active */
+  transform: scale(0.95); /* Slightly shrink button on active */
+}
+
+/* Message display */
+.add-stations p {
+  margin-top: 20px;
+  color: #d9534f; /* Bootstrap danger color for errors */
+  text-align: center; /* Center error messages */
+  font-weight: bold; /* Bold error messages */
+}
+
+/* Available stations section */
+.available-stations {
+  background-color: #ffffff; /* White background for contrast */
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
+.available-stations h2 {
+  margin-top: 0; /* Remove default margin for the heading */
+  color: #007bff; /* Primary color for headings */
+  text-align: center; /* Center the heading */
+}
+
+/* List styles */
+.available-stations ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.available-stations li {
+  background-color: #f1f1f1; /* Softer background color for list items */
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 15px; /* Space between items */
+  transition: background-color 0.3s, transform 0.2s; /* Transition for hover effect */
+}
+
+.available-stations li:hover {
+  background-color: #e2e6ea; /* Slightly darker on hover */
+  transform: scale(1.02); /* Slight scale effect on hover */
+}
+
+.available-stations li strong {
+  color: #333; /* Dark color for strong text */
+  font-weight: 600; /* Bold weight for strong text */
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .add-stations {
+    padding: 20px; /* Reduced padding on smaller screens */
   }
-  
-  /* Headings */
+
   .add-stations h2 {
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center; /* Center the heading */
+    font-size: 1.5rem; /* Smaller font size for smaller screens */
   }
-  
-  /* Form elements */
-  .add-stations form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .add-stations label {
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #444;
-    font-size: 1rem; /* Slightly larger font for labels */
-  }
-  
-  .add-stations input,
-  .add-stations .react-select {
-    padding: 12px; /* Increased padding for comfort */
-    border: 1px solid #ddd; /* Softer border color */
-    border-radius: 6px; /* More rounded corners */
-    margin-bottom: 20px; /* Increased space between inputs */
-    transition: border-color 0.3s, box-shadow 0.3s; /* Added transition for shadow effect */
-  }
-  
-  /* Input focus state */
-  .add-stations input:focus,
-  .add-stations .react-select:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Glow effect on focus */
-    outline: none;
-  }
-  
-  /* Button styles */
+
+  .add-stations label,
   .add-stations button {
-    padding: 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1rem; /* Adjusted font size */
-    transition: background-color 0.3s, transform 0.2s; /* Added transform for button */
+    font-size: 1rem; /* Consistent font size for smaller screens */
   }
-  
-  .add-stations button:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px); /* Lift effect on hover */
-  }
-  
-  /* Message display */
-  .add-stations p {
-    margin-top: 15px;
-    color: #d9534f; /* Bootstrap danger color for errors */
-    text-align: center; /* Center error messages */
-  }
-  
-  /* Available stations list */
-  .add-stations ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .add-stations li {
-    background-color: #f1f1f1; /* Softer background color for list items */
-    padding: 12px;
-    border-radius: 6px;
-    margin-bottom: 12px; /* Reduced margin for list items */
-    transition: background-color 0.3s; /* Transition for hover effect */
-  }
-  
-  .add-stations li:hover {
-    background-color: #e2e6ea; /* Slightly darker on hover */
-  }
-  
-  .add-stations li strong {
-    color: #333;
-  }
-  
+}

@@ -13,6 +13,7 @@ import Audits from './pages/audits';
 import Reporting from './pages/reporting';
 import DynamicResourceAllocation from './pages/dynamic_resource_allocation';
 import StationDetails from './pages/station_details';
+import UserUpdation from './pages/userupdation';
 
 function ProtectedRoute({ element, ...rest }) {
   return isAuthenticated() ? element : <Navigate to="/" />;
@@ -27,6 +28,7 @@ function App() {
           <Route path="/" element={<Login />} />
           {/* Protecting the following routes */}
           <Route path="/register" element={<ProtectedRoute element={<Registration />} />} />
+          <Route path="/userupdation" element={<ProtectedRoute element={<UserUpdation />} />} />
           <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
           <Route path="/add_stations" element={<ProtectedRoute element={<AddStations />} />} />
           <Route path="/add_assests" element={<ProtectedRoute element={<AssetForm />} />} />

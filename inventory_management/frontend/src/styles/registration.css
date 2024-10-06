@@ -1,84 +1,88 @@
 /* registration.css */
 .registration-container {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(to right, #6a11cb, #2575fc);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-  }
-  
-  .registration-container h2 {
-    color: #fff;
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 24px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.5);
-    padding-bottom: 10px;
-    width: 100%;
-    max-width: 300px;
-  }
-  
-  
-  .registration-container .form-class {
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 30px;
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .registration-container label {
-    color: #fff;
-    margin-bottom: 8px;
-    font-weight: bold;
-  }
-  
-  .registration-container input {
-    padding: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 5px;
-    margin-bottom: 15px;
-    font-size: 16px;
-    background: rgba(255, 255, 255, 0.2);
-    color: #fff;
-  }
-  
-  .registration-container input::placeholder {
-    color: rgba(255, 255, 255, 0.7);
-  }
-  
-  .registration-container button {
-    background-color: #2575fc;
-    color: #fff;
-    padding: 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .registration-container button:disabled {
-    background-color: #6a11cb;
-  }
-  
-  .registration-container p {
-    color: #fff;
-    text-align: center;
-  }
-  
-  .registration-container a {
-    color: #fff;
-    display: block;
-    text-align: center;
-    margin-top: 20px;
-    text-decoration: underline;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-image: url('https://wallpaperaccess.com/full/2650729.jpg');
+  background-size: cover;
+  background-blend-mode: multiply;
+  color: white;
+  padding: 20px;
+  position: relative; /* Needed for the overlay */
+  margin-top: -25px;
+}
+
+.registration-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Overlay to make text pop */
+  z-index: -1;
+}
+
+.registration-container h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #ffd700; /* Gold text for headings */
+  margin-bottom: 20px;
+}
+
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white for form background */
+  border-radius: 8px; /* Rounded corners */
+  padding: 20px; /* Padding for inner space */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+}
+
+.registration-form label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #001f3f; /* Darker text for labels */
+}
+
+.registration-form input {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #001f3f; /* Dark border for inputs */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px;
+}
+
+.registration-form button {
+  background-color: #ffd700; /* Gold button */
+  color: #001f3f; /* Dark text for button */
+  border: none;
+  padding: 10px;
+  border-radius: 4px; /* Rounded corners */
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.registration-form button:hover {
+  background-color: #e6b800; /* Slightly darker gold on hover */
+}
+
+.registration-container .message {
+  margin-top: 20px;
+  color: #ff5733; /* Red for error/success messages */
+}
+
+.registration-container a {
+  margin-top: 10px;
+  color: #ffd700; /* Gold link */
+  text-decoration: none;
+}
+
+.registration-container a:hover {
+  text-decoration: underline; /* Underline on hover */
+}

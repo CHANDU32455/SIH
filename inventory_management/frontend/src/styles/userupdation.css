@@ -1,0 +1,131 @@
+/* Wrapper for the entire UserUpdation form */
+.user-updation-wrapper {
+    margin: 0 auto;
+    background-color: #f2f2f2; /* Light grey background for a clean look */
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    position: relative;
+    /* Fit the container to the page */
+    width: 100%; /* Adjust the width as necessary */
+    height: auto; /* Allow the height to adjust based on content */
+    padding: 20px; /* Add some padding for better spacing */
+    box-sizing: border-box; /* Include padding in width/height calculations */
+}
+
+
+/* Center the form horizontally and adjust the width */
+.user-updation-form {
+    width: 100%; /* Ensures the form takes the full width up to the max */
+    margin: 20px auto; /* Center the form horizontally */
+    padding: 20px; /* Add padding */
+    background-color: #fff; /* White background for form */
+    border-radius: 10px; /* Optional: Add border radius */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
+}
+
+/* Search bar and button placement */
+.user-updation-search {
+    position: absolute; /* Use absolute positioning */
+    top: 20px; /* Adjust position */
+    right: 20px; /* Adjust position */
+    display: flex; /* Align items in a row */
+    align-items: center; /* Center vertically */
+}
+
+/* Input for user ID */
+.user-updation-input-search {
+    padding: 5px; /* Smaller padding */
+    border: 1px solid #007bff; /* Police blue border */
+    border-radius: 5px;
+    font-size: 14px; /* Smaller font size */
+    color: #333;
+    margin-right: 5px; /* Small margin between input and button */
+}
+
+/* Button styling for the search button */
+.user-updation-button-search {
+    background-color: #007bff; /* Police blue background */
+    color: #fff;
+    padding: 5px 10px; /* Smaller padding */
+    border: none;
+    border-radius: 5px;
+    font-size: 14px; /* Smaller font size */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.user-updation-button-search:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Error message styling */
+.user-updation-error {
+    color: #dc3545; /* Red for errors */
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Form fields styling */
+.user-updation-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+/* Align labels to the left */
+.user-updation-field label {
+    margin-bottom: 5px; /* Space between label and input */
+    font-weight: bold; /* Optional: Make label bold */
+    text-align: left;
+    margin-left: 8px;
+}
+
+/* Input fields */
+.user-updation-input {
+    padding: 10px;
+    border: 1px solid #007bff; /* Police blue border */
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+    transition: border-color 0.3s; /* Smooth border transition */
+}
+
+.user-updation-input:focus {
+    border-color: #0056b3; /* Darker blue when focused */
+    outline: none; /* Remove default outline */
+}
+
+/* Select dropdown styling */
+.user-updation-select {
+    margin-top: 10px;
+}
+
+/* Button styling for form submission */
+.user-updation-button {
+    background-color: #007bff; /* Police blue background */
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.user-updation-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* User details section */
+.user-updation-details {
+    margin: 20px auto; /* Centers the element horizontally */
+    padding: 15px;
+    border: 1px solid #007bff; /* Police blue border */
+    border-radius: 10px;
+    background-color: #fff; /* White background for details */
+    max-width: 600px; /* Maximum width set to 600px */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
+}
