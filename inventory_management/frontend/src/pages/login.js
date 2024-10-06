@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { login } from '../auth';
@@ -24,12 +24,11 @@ function Login() {
     setCredentials({ ...credentials, identifier: '' });
   };
 
-  // Correctly use useEffect to check authentication status
   useEffect(() => {
     if (isAuthenticated()) {
       navigate('/dashboard'); // Redirect to dashboard if already authenticated
     }
-  }, [navigate]); // Dependency array to run the effect only once when the component mounts
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,15 +38,24 @@ function Login() {
         identifier: credentials.identifier,
         password: credentials.password,
       });
-  
+      
+      // Log the response data
+      console.log('Response from backend:', response.data);
+
+      // After successful login, store station_name in session storage
+      sessionStorage.setItem('station_name', response.data.user.station.station_name);
+      console.log('Station name:', response.data.user.station.station_name);
       setMessage('Login successful: ' + JSON.stringify(response.data));
       
+      // Store user data in local/session storage
       login(response.data.user);
       
+      // Redirect to dashboard and pass user data through state
       navigate('/dashboard', { state: { user: response.data.user } });
-      console.log(response.data.user);
+      
     } catch (error) {
       setMessage('Error during login: ' + (error.response?.data?.detail || error.message));
+      console.error('Login error:', error); // Log any error encountered during login
     } finally {
       setLoading(false);
     }

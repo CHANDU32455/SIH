@@ -9,7 +9,6 @@ from django.db.models import Q
 from .models import Asset, UserRegistration,Stations
 from .serializers import UserRegistrationSerializer,UserLoginSerializer,StationsSerializer,AssetSerializer
 from rest_framework.exceptions import NotFound
-from rest_framework.generics import ListAPIView
 
 
 def index(request):
@@ -39,22 +38,32 @@ class UserLoginView(generics.GenericAPIView):
             identifier = serializer.validated_data['identifier']
             password = serializer.validated_data['password']
 
-            # Find user by identifier (either username or user_id)
+            # Find user by identifier (either user_id or name)
             try:
                 user = UserRegistration.objects.get(Q(user_id=identifier) | Q(name=identifier))
             except UserRegistration.DoesNotExist:
                 return Response({"detail": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
 
-             # Check if the provided password matches the stored hashed password
+            # Check if the provided password matches the stored hashed password
             if check_password(password, user.password):
-                # Return only the relevant fields
+                # Check if the user is associated with a station
+                station = None
+                if user.station:
+                    station = {
+                        "station_id": user.station.station_id,
+                        "station_name": user.station.station_name,
+                        "station_location": user.station.station_location
+                    }
+
+                # Return the user information including station details (if available)
                 return Response({
                     "message": "Login successful!",
                     "user": {
                         "name": user.name,
                         "user_id": user.user_id,
                         "location": user.location,
-                        "position": user.position
+                        "position": user.position,
+                        "station": station
                     }
                 }, status=status.HTTP_200_OK)
             else:
@@ -79,6 +88,13 @@ class StationListCreateView(generics.ListCreateAPIView):
         
         # Return the created station's data as a success response
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    def get_queryset(self):
+        queryset = Stations.objects.all()
+        station_name = self.request.query_params.get('station_name', None)
+        if station_name is not None:
+            queryset = queryset.filter(station_name=station_name)
+        return queryset
 
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()

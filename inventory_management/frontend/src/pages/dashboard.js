@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios'; // Import axios for making API calls
+import axios from 'axios';
 import ca from '../assets/costanalysis.jpeg';
 import tm from '../assets/timemenagent.png';
 import '../styles/dashboard.css';
@@ -10,36 +10,33 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true); // State to manage loading status
   const [error, setError] = useState(null); // State to manage error status
 
-  // Fetch username and position from session storage
+  // Fetch username, position, and station_name from session storage
   const username = sessionStorage.getItem('username');
   const position = sessionStorage.getItem('position');
+  const stationName = sessionStorage.getItem('station_name');
+
   const navigate = useNavigate(); // Initialize useNavigate for navigation
 
   useEffect(() => {
     const fetchStations = async () => {
-      setLoading(true); // Set loading state to true before fetching data
+      setLoading(true);
       try {
-        let response;
+        const response = position === 'admin' 
+          ? await axios.get('http://localhost:8000/api/stations/') // Fetch all stations for admin
+          : await axios.get(`http://localhost:8000/api/stations/?station_name=${stationName}`); // Fetch specific station for station master
         
-        // Check if the user is an admin
-        if (position === 'admin') {
-          // Fetch all stations for admin
-          response = await axios.get('http://localhost:8000/api/stations/');
-        } else {
-          // Fetch the station based on the username (station master)
-          response = await axios.get(`http://localhost:8000/api/stations/?station_master_username=${username}`);
-        }
+        // Set stations in state
+        setStations(position === 'admin' ? response.data : response.data.filter(station => station.station_name === stationName));
 
-        setStations(response.data); // Set the station data
       } catch (err) {
-        setError('Failed to fetch station details'); // Set error message if API call fails
+        setError('Failed to fetch station details');
       } finally {
-        setLoading(false); // Set loading to false after fetch is complete
+        setLoading(false);
       }
     };
 
     fetchStations(); // Call the function to fetch stations
-  }, [position, username]); // Dependency array to run this effect when position or username changes
+  }, [position, stationName]);
 
   // Function to handle station click and navigate to the asset page
   const handleStationClick = (station) => {
@@ -73,12 +70,11 @@ export default function Dashboard() {
 
       <div className="scrolling-box">
         <div className="horizontal-rows">
-          {loading ? ( // Show loading state
+          {loading ? (
             <div>Loading stations...</div>
-          ) : error ? ( // Show error message if there was an error
+          ) : error ? (
             <div>{error}</div>
           ) : (
-            // Map through stations to display their details
             stations.map((station, index) => (
               <div
                 key={index}

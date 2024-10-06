@@ -1,4 +1,4 @@
-from rest_framework import serializers,generics
+from rest_framework import serializers
 from .models import Asset, Stations,UserRegistration
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
