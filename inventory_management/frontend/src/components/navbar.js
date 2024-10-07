@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -83,6 +83,8 @@ export default function NavBar() {
     position: '',
   });
 
+  const location = useLocation(); // Detect route changes
+
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
@@ -104,21 +106,32 @@ export default function NavBar() {
   }, [lastScrollPos]);
 
   useEffect(() => {
-    // Fetch user data from sessionStorage
-    const username = sessionStorage.getItem('username');
-    const position = sessionStorage.getItem('position');
-    const station = sessionStorage.getItem('station_name');
+    // Function to refresh user data
+    const refreshUserData = () => {
+      const username = sessionStorage.getItem('username');
+      const position = sessionStorage.getItem('position');
+      const station = sessionStorage.getItem('station_name');
 
-    // If user data exists in sessionStorage, mark the user as logged in
-    if (username && position) {
-      setIsLoggedIn(true);
-      setUserData({
-        name: username,
-        station: station,
-        position: position,
-      });
-    }
-  }, []);
+      if (username && position) {
+        setIsLoggedIn(true);
+        setUserData({
+          name: username,
+          station: station,
+          position: position,
+        });
+      } else {
+        setIsLoggedIn(false);
+        setUserData({
+          name: '',
+          station: '',
+          position: '',
+        });
+      }
+    };
+
+    // Refresh user data every time the route changes
+    refreshUserData();
+  }, [location]); // `location` changes whenever a user navigates to a different route
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);

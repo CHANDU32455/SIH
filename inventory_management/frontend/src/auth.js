@@ -1,5 +1,5 @@
 export const isAuthenticated = () => {
-    return sessionStorage.getItem('username') !== null;  // or check for token
+    return sessionStorage.getItem('username') !== null;
   };
   
   export const login = (userData) => {
@@ -9,6 +9,7 @@ export const isAuthenticated = () => {
   
   export const logout = () => {
     sessionStorage.removeItem('username');
+    sessionStorage.removeItem('position');
     // Also remove tokens if stored
   };
   
