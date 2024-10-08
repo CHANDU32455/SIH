@@ -54,7 +54,7 @@ function App() {
           <Route path="/logout" element={<Logout />} />
 
           {/* Unauthorized page */}
-          <Route path="/unauthorized" element={<div>Unauthorized - You don't have permission to view this page.</div>} />
+          <Route path="/unauthorized" element={<div className="unauthorized">Unauthorized - You don't have permission to view this page.</div>} />
         </Routes>
       </div>
     </BrowserRouter>

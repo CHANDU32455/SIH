@@ -1,6 +1,8 @@
 import { Link, Route, Routes } from "react-router-dom";
 import ProtectedRoute from "../ProtectedRoute";
 import AddStations from "../pages/add_stations";
+import Registration from "../pages/registration";
+import UserUpdation from "../pages/userupdation";
 function Stations() {
     const containerStyle = {
         display: 'flex',
@@ -49,7 +51,6 @@ function Stations() {
         e.target.style.backgroundColor = 'transparent';
         e.target.style.transform = 'scale(1)';
     };
-
     return (
         <div style={containerStyle}>
             <h1>Stations</h1>
@@ -62,13 +63,34 @@ function Stations() {
                 >
                     Add Station
                 </Link>
+                <Link
+                    to="/register"
+                    style={linkStyle}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                >
+                    Register
+                </Link>
+                <Link
+                    to="/userupdation"
+                    style={linkStyle}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                >
+                    User Updation   
+                </Link>
+                
                 {/* You can add more links here if needed */}
             </div>
 
             {/* Render the respective component based on the route */}
             <Routes>
-            <Route path="/add_stations" 
-                 element={<ProtectedRoute element={<AddStations />} allowedRoles={['admin']} />} />
+                <Route path="/add_stations"
+                    element={<ProtectedRoute element={<AddStations />} allowedRoles={['admin']} />} />
+                <Route path="/register"
+                    element={<ProtectedRoute element={<Registration />} allowedRoles={['admin']} />} />
+                <Route path="/userupdation"
+                    element={<ProtectedRoute element={<UserUpdation />} allowedRoles={['admin']} />} />
             </Routes>
         </div>
     );

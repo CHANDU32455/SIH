@@ -2,8 +2,19 @@ import { Link, Route, Routes } from "react-router-dom";
 import AssetForm from "../pages/add_assests";
 import BulkAssetUpload from "../pages/bulk_assets_upload";
 import ProtectedRoute from "../ProtectedRoute";
+import { useEffect, useState } from "react";
 
-function Assests() {
+function Assets() {
+    const [position, setPosition] = useState("");
+
+    // Get position from sessionStorage when component mounts
+    useEffect(() => {
+        const storedPosition = sessionStorage.getItem('position');
+        if (storedPosition) {
+            setPosition(storedPosition);
+        }
+    }, []);
+
     const containerStyle = {
         display: 'flex',
         flexDirection: 'column',
@@ -56,6 +67,7 @@ function Assests() {
         <div style={containerStyle}>
             <h1>Assets</h1>
             <div style={navbarStyle}>
+                {/* Show 'Add Assets' to both Admin and Station Master */}
                 <Link
                     to="/add_assests"
                     style={linkStyle}
@@ -64,25 +76,33 @@ function Assests() {
                 >
                     Add Assets
                 </Link>
-                <Link
-                    to="/bulk_assets_upload"
-                    style={linkStyle}
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                >
-                    Add Bulk Assets
-                </Link>
+
+                {/* Show 'Add Bulk Assets' only to Admin */}
+                {position === 'admin' && (
+                    <Link
+                        to="/bulk_assets_upload"
+                        style={linkStyle}
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                    >
+                        Add Bulk Assets
+                    </Link>
+                )}
             </div>
 
             {/* Render the respective component based on the route */}
             <Routes>
-                <Route path="/add_assests"
-                    element={<ProtectedRoute element={<AssetForm />} allowedRoles={['admin', 'stationmaster']} />} />
-                <Route path="/bulk_assets_upload" 
-                    element={<ProtectedRoute element={<BulkAssetUpload />} allowedRoles={['admin']} />} />
+                <Route
+                    path="/add_assests"
+                    element={<ProtectedRoute element={<AssetForm />} allowedRoles={['admin', 'stationmaster']} />}
+                />
+                <Route
+                    path="/bulk_assets_upload"
+                    element={<ProtectedRoute element={<BulkAssetUpload />} allowedRoles={['admin']} />}
+                />
             </Routes>
         </div>
     );
 }
 
-export default Assests;
+export default Assets;
