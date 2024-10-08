@@ -6,6 +6,7 @@ import Login from './pages/login';
 import Dashboard from './pages/dashboard';
 import AddStations from './pages/add_stations';
 import NavBar from './components/navbar';
+import Assests from './components/assests';
 import AssetForm from './pages/add_assests';
 import Logout from './components/logout';
 import Audits from './pages/audits';
@@ -14,6 +15,8 @@ import DynamicResourceAllocation from './pages/dynamic_resource_allocation';
 import StationDetails from './pages/station_details';
 import UserUpdation from './pages/userupdation';
 import ProtectedRoute from './ProtectedRoute';
+import Stations from './components/stations';
+import BulkAssetUpload from './pages/bulk_assets_upload';
 
 function App() {
   return (
@@ -30,10 +33,16 @@ function App() {
                  element={<ProtectedRoute element={<UserUpdation />} allowedRoles={['admin']} />} />
           <Route path="/dashboard" 
                  element={<ProtectedRoute element={<Dashboard />} allowedRoles={['admin', 'stationmaster']} />} />
+          <Route path="/stations"
+                 element={<ProtectedRoute element={<Stations />} allowedRoles={['admin', 'stationmaster']} />} />
           <Route path="/add_stations" 
                  element={<ProtectedRoute element={<AddStations />} allowedRoles={['admin']} />} />
+          <Route path="/assests" 
+                 element={<ProtectedRoute element={<Assests />} allowedRoles={['admin', 'stationmaster']} />} />
           <Route path="/add_assests" 
                  element={<ProtectedRoute element={<AssetForm />} allowedRoles={['admin', 'stationmaster']} />} />
+          <Route path="/bulk_assets_upload" 
+                 element={<ProtectedRoute element={<BulkAssetUpload />} allowedRoles={['admin']} />} />
           <Route path="/station_details" 
                  element={<ProtectedRoute element={<StationDetails />} allowedRoles={['admin', 'stationmaster']} />} />
           <Route path="/audits" 

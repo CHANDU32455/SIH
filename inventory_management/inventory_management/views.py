@@ -152,6 +152,23 @@ def create_asset(request):
         return Response(serializer.data)
     return Response(serializer.errors, status=400)
 
+from rest_framework.views import APIView
+class BulkAssetCreateView(APIView):
+    def post(self, request, *args, **kwargs):
+        data = request.data
+        
+        # Check if the request is a list of assets
+        if isinstance(data, list):
+            serializer = AssetSerializer(data=data, many=True)
+        else:
+            return Response({'error': 'Expected a list of assets'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if serializer.is_valid():
+            serializer.save()  # Save all assets at once
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class AssetListByStationView(generics.ListAPIView):
     serializer_class = AssetSerializer
 

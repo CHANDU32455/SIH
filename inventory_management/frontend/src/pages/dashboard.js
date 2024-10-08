@@ -56,8 +56,8 @@ export default function Dashboard() {
 
       {position === 'admin' && (
         <div className="Dashboard-actions-container">
-          <Link to="/add_stations" className="Dashboard-action-button">Add Stations</Link>
-          <Link to="/add_assests" className="Dashboard-action-button">Add Assets</Link>
+          <Link to="/stations" className="Dashboard-action-button">Stations</Link>
+          <Link to="/assests" className="Dashboard-action-button">Assets</Link>
           <Link to="/register" className="Dashboard-action-button">Add Station Masters</Link>
           <Link to="/userupdation" className="Dashboard-action-button">UpdateUser</Link>
         </div>
