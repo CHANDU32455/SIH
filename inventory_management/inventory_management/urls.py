@@ -28,5 +28,11 @@ urlpatterns = [
     path('api/bulk_assets/', BulkAssetCreateView.as_view(), name='bulk_asset_create'),
     path('api/station-masters/', StationMastersListView.as_view(), name='station-masters-list'),
     path('create-asset/', create_asset, name='create-asset'),
+    path('api/get_asset_ids/', get_assets, name='get-assets'),
     path('api/assets/station/<str:station_name>/', AssetListByStationView.as_view(), name='assets-by-station'),
+    
+    path('api/audits/', AuditLogView.as_view(), name='audit-log-list'),
+    path('api/audits/create/', AuditLogCreateView.as_view(), name='audit-log-create'),
+    path('api/audits/delete/<str:audit_log_id>/', AuditLogDeleteView.as_view(), name='delete_audit'),
+    path('api/audits/update/<str:audit_log_id>/', AuditLogUpdateView.as_view(), name='audit-log-update'),
 ]

@@ -1,13 +1,14 @@
 # inventory_management/views.py
-from django.shortcuts import render
+from datetime import timezone
+from django.shortcuts import get_object_or_404, render
 from rest_framework import generics,status
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from rest_framework.decorators import api_view
 from django.contrib.auth.hashers import check_password
 from django.db.models import Q
-from .models import Asset, UserRegistration,Stations
-from .serializers import UserRegistrationSerializer,UserLoginSerializer,StationsSerializer,AssetSerializer
+from .models import Asset, AuditLog, UserRegistration,Stations
+from .serializers import AuditLogSerializer, UserRegistrationSerializer,UserLoginSerializer,StationsSerializer,AssetSerializer
 from rest_framework.exceptions import NotFound
 
 
@@ -151,6 +152,11 @@ def create_asset(request):
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors, status=400)
+@api_view(['GET'])
+def get_assets(request):
+    assets = Asset.objects.all().values('asset_id','name','location','status')
+    return Response(assets)  # No need for serialization if using .values()
+
 
 from rest_framework.views import APIView
 class BulkAssetCreateView(APIView):
@@ -197,3 +203,45 @@ class AssetListByStationView(generics.ListAPIView):
         
         except Stations.DoesNotExist:
             raise NotFound(detail="Station not found", code=404)
+
+class AuditLogView(generics.ListAPIView):
+    queryset = AuditLog.objects.all()  # Retrieve all audit logs
+    serializer_class = AuditLogSerializer
+
+    def get(self, request, *args, **kwargs):
+        # Fetch all audit logs
+        audit_logs = self.get_queryset()
+
+        if audit_logs.exists():
+            serializer = self.get_serializer(audit_logs, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({"message": "No logs found to fetch."}, status=status.HTTP_404_NOT_FOUND)
+class AuditLogCreateView(generics.CreateAPIView):
+    queryset = AuditLog.objects.all()
+    serializer_class = AuditLogSerializer
+class AuditLogDeleteView(generics.DestroyAPIView):
+    queryset = AuditLog.objects.all()
+    serializer_class = AuditLogSerializer
+    lookup_field = 'audit_log_id'  # Use 'audit_log_id' instead of 'pk'
+
+    def get_queryset(self):
+        # Get the audit log based on the asset_id string (audit_log_id from URL)
+        audit_log_id = self.kwargs['audit_log_id']
+        # Assuming audit_log_id is the string value from the Asset model's asset_id field
+        return AuditLog.objects.filter(audit_log_id__asset_id=audit_log_id)
+    
+    def delete(self, request, *args, **kwargs):
+        audit_log = self.get_object()
+        if audit_log:
+            audit_log.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
+class AuditLogUpdateView(generics.UpdateAPIView):
+    queryset = AuditLog.objects.all()
+    serializer_class = AuditLogSerializer
+    lookup_field = 'audit_log_id'  # This should match your URL configuration
+
+    def get_queryset(self):
+        audit_log_id = self.kwargs['audit_log_id']
+        return AuditLog.objects.filter(audit_log_id__asset_id=audit_log_id)

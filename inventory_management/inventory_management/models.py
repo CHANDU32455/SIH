@@ -49,8 +49,8 @@ class Asset(models.Model):
     STATUS_CHOICES = [
         ('ACTIVE', 'Active'),
         ('INACTIVE', 'Inactive'),
-        ('MOVING', 'Moving'),
-        ('MOVED', 'Moved'),
+        ('UNDER_REPAIR', 'under_repair'),
+        ('DECOMMISSIONED', 'Decommissioned'),    
     ]
     
     asset_id = models.CharField(max_length=50, unique=True, primary_key=True)
@@ -67,6 +67,34 @@ class Asset(models.Model):
         # Ensure that the expiry_date is later than manufactured_date
         if self.expiry_date <= self.manufactured_date:
             raise ValidationError("Expiry date must be after the manufactured date.")
-
+    @property
+    def get_asset_id(self):
+        return self.asset_id
     def __str__(self):
         return self.name
+
+class AuditLog(models.Model):
+    UTILIZATION_CHOICES = [
+        ('IN_USE', 'In_Use'),
+        ('IDLE', 'Idle'),
+        ('UNAVAILABLE', 'Unavailable'),
+    ]
+
+    STATUS_CHOICES = [
+        ('ACTIVE', 'Active'),
+        ('INACTIVE', 'Inactive'),
+        ('UNDER_REPAIR', 'under_repair'),
+        ('DECOMMISSIONED', 'Decommissioned'),    
+    ]
+    
+    audit_log_id = models.ForeignKey(Asset, on_delete=models.CASCADE)
+    audit_date = models.DateTimeField(auto_now_add=True)
+    auditor_name = models.CharField(max_length=100)
+    location = models.CharField(max_length=200)
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES)
+    utilization = models.CharField(max_length=50, choices=UTILIZATION_CHOICES)
+    comments = models.TextField(null=True, blank=True)
+    discrepancy = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Asset ID: {self.audit_log_id.get_asset_id}"
