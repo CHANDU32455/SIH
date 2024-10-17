@@ -58,12 +58,14 @@ export default function Dashboard() {
         <div className="Dashboard-actions-container">
           <Link to="/stations" className="Dashboard-action-button">Stations</Link>
           <Link to="/assests" className="Dashboard-action-button">Assets</Link>
+          <Link to="/req_page" className='Dashboard-action-button'>REQ ASSESTS</Link>
         </div>
       )}
 
       {position === 'stationmaster' &&
         <div className="Dashboard-actions-container">
           <Link to="/assests" className="Dashboard-action-button">Assets</Link>
+          <Link to="/req_page" className='Dashboard-action-button'>REQ ASSESTS</Link>
         </div>
       }
 

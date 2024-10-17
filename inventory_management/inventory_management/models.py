@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.contrib.auth.hashers import make_password
 from django.utils import timezone
@@ -98,3 +99,14 @@ class AuditLog(models.Model):
 
     def __str__(self):
         return f"Asset ID: {self.audit_log_id.get_asset_id}"
+
+class AssetRequest(models.Model):
+    request_id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True)  # Unique request ID
+    asset = models.ForeignKey(Asset, on_delete=models.CASCADE)  # Reference to the Asset model
+    requesting_station = models.CharField(max_length=50, null=True)
+    quantity = models.PositiveIntegerField()  # Number of items requested
+    request_date = models.DateField(auto_now_add=True)  # Automatically set the request date when created
+
+    def __str__(self):
+        # String representation showing the asset name and quantity requested
+        return f"{self.asset.name} - {self.quantity}"

@@ -35,4 +35,8 @@ urlpatterns = [
     path('api/audits/create/', AuditLogCreateView.as_view(), name='audit-log-create'),
     path('api/audits/delete/<str:audit_log_id>/', AuditLogDeleteView.as_view(), name='delete_audit'),
     path('api/audits/update/<str:audit_log_id>/', AuditLogUpdateView.as_view(), name='audit-log-update'),
+
+    path('api/asset_requests/', AssetRequestView.as_view(), name='asset-request-list-create'),
+    path('api/asset_requests/<uuid:request_id>/', AssetRequestDeleteView.as_view(), name='asset-request-delete'),
+    path('api/check_asset_availability/', CheckStationAssetAvailabilityView.as_view(), name='check-asset-availability'),
 ]

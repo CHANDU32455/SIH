@@ -3,6 +3,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Button } from 'react-bootstrap';
 import Select from 'react-select';
+import Marquee from "react-fast-marquee";
 import LoadingAnimation from '../components/loading';
 
 export default function Audits() {
@@ -211,6 +212,8 @@ export default function Audits() {
 
     return (
         <div className="container mt-5">
+            <Marquee> Audit for stationY on dateY</Marquee>
+        <h3 className="alert alert-danger">Auditing happens for everystation on every month first week.(Auditors will do that.)</h3>
             {error && <div className="alert alert-danger">{error}</div>}
             <div className="d-flex justify-content-between align-items-center mb-4">
                 <h1>Audited Assets</h1>

@@ -7,8 +7,8 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.decorators import api_view
 from django.contrib.auth.hashers import check_password
 from django.db.models import Q
-from .models import Asset, AuditLog, UserRegistration,Stations
-from .serializers import AuditLogSerializer, UserRegistrationSerializer,UserLoginSerializer,StationsSerializer,AssetSerializer
+from .models import *
+from .serializers import *
 from rest_framework.exceptions import NotFound
 
 
@@ -245,3 +245,48 @@ class AuditLogUpdateView(generics.UpdateAPIView):
     def get_queryset(self):
         audit_log_id = self.kwargs['audit_log_id']
         return AuditLog.objects.filter(audit_log_id__asset_id=audit_log_id)
+
+class AssetRequestView(generics.ListCreateAPIView):
+    queryset = AssetRequest.objects.all()
+    serializer_class = AssetRequestSerializer
+
+class AssetRequestDeleteView(APIView):
+    def delete(self, request, request_id):
+        try:
+            # Get the AssetRequest object by request_id
+            asset_request = AssetRequest.objects.get(request_id=request_id)
+            # Delete the object
+            asset_request.delete()
+            # Return a 204 No Content response after successful deletion
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except AssetRequest.DoesNotExist:
+            # Return a 404 Not Found response if the request does not exist
+            return Response({"error": "Request not found."}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            # Return a 400 Bad Request response for any other errors
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+class CheckStationAssetAvailabilityView(APIView):
+    def get(self, request, *args, **kwargs):
+        asset_name = request.query_params.get('asset_name')
+        station_name = request.query_params.get('station_name')
+
+        try:
+            # Fetch the station based on the provided station name
+            station = Stations.objects.filter(station_name=station_name).first()
+
+            if not station:
+                return Response({"message": "Station not found."}, status=status.HTTP_404_NOT_FOUND)
+
+            # Filter assets based on the name and station
+            assets = Asset.objects.filter(name=asset_name, station_id=station)
+
+            if not assets.exists():
+                return Response({"message": "No assets found for the given name at this station."}, status=status.HTTP_404_NOT_FOUND)
+
+            # Serialize the asset data to return in response
+            serialized_assets = AssetSerializer(assets, many=True).data
+
+            return Response(serialized_assets, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

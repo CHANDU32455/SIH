@@ -16,6 +16,7 @@ import UserUpdation from './pages/userupdation';
 import ProtectedRoute from './ProtectedRoute';
 import Stations from './components/stations';
 import AuditsPage from './pages/audits';
+import Requests from './pages/req_page';
 import LoadingAnimation from './components/loading';
 import BulkAssetUpload from './pages/bulk_assets_upload';
 
@@ -31,6 +32,7 @@ function App() {
 
           {/* Public routes */}
           <Route path="/loading" element={<LoadingAnimation />} />
+          <Route path='/req_page' element={<Requests/>} />
 
           {/* Role-based protected routes */}
           <Route path="/register" 

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Asset, AuditLog, Stations,UserRegistration
+from .models import Asset, AuditLog, Stations,UserRegistration,AssetRequest
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -64,3 +64,8 @@ class AuditLogSerializer(serializers.ModelSerializer):
         instance.discrepancy = validated_data.get('discrepancy', instance.discrepancy)
         instance.save()
         return instance
+
+class AssetRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AssetRequest
+        fields = '__all__'

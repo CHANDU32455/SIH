@@ -1,26 +1,8 @@
-2. Utilization Monitoring
-Goal: Monitor the utilization rates of hardware assets to 
-    identify underutilized resources and optimize their deployment.
-Steps to Achieve This:
-
-Utilization Data Tracking: Implement mechanisms to track the usage of hardware assets over time. 
-    This can involve logging how frequently and for how long each asset is used, as well as any idle times.
-Integration with Existing Data: Utilize existing data sources (e.g., asset logs, maintenance records)
-    to get a comprehensive picture of utilization.
-Analytics and Reporting: Develop tools to analyze utilization data and generate reports. 
-    The reports should highlight underutilized, overused, or idle assets.
-Resource Reallocation: Based on the reports, identify assets that could be 
-    reallocated to locations where they are more likely to be used. 
-    The system can recommend reallocations or initiate them automatically based on predefined rules.
-
-
 import { useState, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Select from "react-select";
 import axios from "axios";
-import { debounce } from "lodash";
-
 
 export default function Requests() {
     const [showAssetReqModal, setShowAssetReqModal] = useState(false);
@@ -91,24 +73,20 @@ export default function Requests() {
         setFilteredAssets(filtered);
     }, [filter, requestingAssets]);
 
-
     const handleDeleteRequest = async (requestId) => {
-        const confirmed = window.confirm("Do you want to delete this request?");
-        if (confirmed) {
-            setIsDeleting(true);
-            try {
-                const response = await axios.delete(`http://localhost:8000/api/asset_requests/${requestId}/`);
-                if (response.status === 204) {
-                    alert("Request Deleted Successfully");
-                } else {
-                    alert("Failed to delete the request. Please try again.");
-                }
-            } catch (error) {
-                console.error("Error deleting the request:", error);
+        if (!window.confirm("Are you sure you want to delete this request?")) {
+            return;
+        }
+        try {
+            const response = await axios.delete(`http://localhost:8000/api/asset_requests/${requestId}/`);
+            if (response.status === 204) {
+                alert("Request Deleted Successfully");
+            } else {
                 alert("Failed to delete the request. Please try again.");
-            } finally {
-                setIsDeleting(false);
             }
+        } catch (error) {
+            console.error("Error deleting the request:", error);
+            alert("Failed to delete the request. Please try again.");
         }
     };
 
@@ -141,7 +119,9 @@ export default function Requests() {
             setLoading(false);
         }
     };
-
+    const handleProvide = (asset_id) => {
+        console.log("Asset ID:", asset_id);
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -223,9 +203,19 @@ export default function Requests() {
                     <Modal.Title>Asset Availability</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <p>Asset ID: {availabilityInfo.asset_id}</p>
-                    <p>Available Quantity: {availabilityInfo.available_quantity}</p>
-                    <p>Status: {availabilityInfo.status}</p>
+                    {availabilityInfo.length > 0 ? (
+                        availabilityInfo.map((asset, index) => (
+                            <div key={index} style={{ marginBottom: '15px' }}>
+                                <p>Asset ID: {asset.name}</p>
+                                <p>Asset Type: {asset.asset_type}</p>
+                                <p>Status: {asset.status}</p>
+                                <Button variant="outline-dark" onClick={() => handleProvide(asset.asset_id)}>Provide</Button>
+                                <hr />
+                            </div>
+                        ))
+                    ) : (
+                        <p>No availability information found.</p>
+                    )}
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={() => setShowAvailabilityModal(false)}>
@@ -233,6 +223,7 @@ export default function Requests() {
                     </Button>
                 </Modal.Footer>
             </Modal>
+
 
             <div>
                 {Object.keys(filteredAssets).length === 0 ? (
